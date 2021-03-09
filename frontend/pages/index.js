@@ -9,6 +9,12 @@ const Index = () => {
       <li>
         <Link href='/all-graphql'>All Contacts (GraphQL)</Link>
       </li>
+      <li>
+        <Link href='/paginated-rest'>Paginated Contacts (REST)</Link>
+      </li>
+      <li>
+        <Link href='/paginated-graphql'>Paginated Contacts (GraphQL)</Link>
+      </li>
     </ul>
   )
 }

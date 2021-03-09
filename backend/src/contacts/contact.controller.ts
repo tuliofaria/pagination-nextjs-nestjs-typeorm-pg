@@ -1,15 +1,45 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, Param, Query } from '@nestjs/common'
 import { Contact } from './contact.entity'
 import { ContactService } from './contact.service'
 
+interface PaginatedContacts {
+  data: Contact[]
+  pagination: {
+    total: number
+    pageSize: number
+    currentPage: number
+  }
+}
 @Controller('contacts')
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
+
   @Get()
   async getAll(): Promise<Contact[]> {
     const contacts = await this.contactService.findAll()
     return contacts
   }
+
+  @Get('paginated')
+  async getPaginated(
+    @Query('pageSize') pageSize: number = 10,
+    @Query('currentPage') currentPage: number = 0,
+  ): Promise<PaginatedContacts> {
+    const [contacts, total] = await this.contactService.findAllPaginated({
+      pageSize,
+      currentPage,
+    })
+    const result: PaginatedContacts = {
+      data: contacts,
+      pagination: {
+        total,
+        pageSize,
+        currentPage,
+      },
+    }
+    return result
+  }
+
   @Get('generate-db')
   async generateDB(): Promise<string> {
     const data = [

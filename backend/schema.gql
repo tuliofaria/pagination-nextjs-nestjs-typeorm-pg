@@ -8,6 +8,17 @@ type Contact {
   email: String
 }
 
+type ContactPaginated {
+  data: [Contact!]!
+  total: Float!
+}
+
 type Query {
   getAllContacts: [Contact!]!
+  getAllContactsPaginated(paginationOptions: ContactPaginationInput): ContactPaginated!
+}
+
+input ContactPaginationInput {
+  pageSize: Float
+  currentPage: Float
 }

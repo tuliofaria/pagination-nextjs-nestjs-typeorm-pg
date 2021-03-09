@@ -11,3 +11,12 @@ export class ContactPublic {
   @Field({ nullable: true })
   email: string
 }
+
+@ObjectType('ContactPaginated')
+export class ContactPaginated {
+  @Field(() => [ContactPublic])
+  data: ContactPublic[]
+
+  @Field()
+  total: number
+}
